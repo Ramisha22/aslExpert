@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "306493811233",
+    "firebase_url": "https://asl-expert-default-rtdb.firebaseio.com",
+    "project_id": "asl-expert",
+    "storage_bucket": "asl-expert.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306493811233:android:079edc8f4e0eb5a8021160",
+        "android_client_info": {
+          "package_name": "Asl.Expert1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306493811233-kg77rf7usd2dj86hisn8g9e612fb9a75.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAc_S6uVlhqZSWkozrFU5uJyoHRISlCkBY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306493811233-kg77rf7usd2dj86hisn8g9e612fb9a75.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
