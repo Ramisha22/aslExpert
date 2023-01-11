@@ -25,9 +25,9 @@ function Login({ navigation, route }) {
   };
   const storeData = async value => {
 		try {
+      console.log(value);
       console.log('j');
 			await AsyncStorage.setItem('userId', value);
-      console.log(await AsyncStorage.getAllKeys());
 		} catch (e) {
 			throw e;
 		}
@@ -39,7 +39,7 @@ function Login({ navigation, route }) {
   signInWithEmailAndPassword(auth, email, password)
   .then(userCredential => {
     storeData(userCredential.user.uid);
-    navigation.navigate('learn');
+    navigation.navigate('conversion');
   })
   .catch(err => {
     console.log(err.code)

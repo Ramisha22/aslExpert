@@ -2,11 +2,14 @@ import * as React from 'react';
 import {ConversionScreen} from './conversion';
 import {NotificationsScreen} from './notification';
 import {NotesScreen} from './notes';
+import Ionicon from 'react-native-vector-icons/Ionicons';
 import {SignUp} from './signup';
 import {Login} from './SignIn';
+import {Feedback} from './feedback';
 import {Splash} from './Splash';
 import {Welcome} from './welcome';
 import {Forgotpass} from './forgotpassword';
+import {Drawer} from './drawer';
 import {LearnASL} from './learn';
 import {Editprofile} from './editProfile';
 import { NavigationContainer ,DarkTheme  } from '@react-navigation/native';
@@ -33,6 +36,7 @@ export default function App() {
   return (
     <NavigationContainer  theme={MyTheme} styles={styles.container}>
       <Stack.Navigator>
+      
       <Stack.Screen 
         options={{
          headerShown:false
@@ -72,6 +76,14 @@ export default function App() {
           backgroundColor: 'rgb(52, 58, 64)',
           }
         }} 
+      name="feedback" component={Feedback} />
+      <Stack.Screen 
+        options={{
+          title: '',
+          headerStyle: {
+          backgroundColor: 'rgb(52, 58, 64)',
+          }
+        }} 
       name="login" component={Login} />
       <Stack.Screen 
         options={{
@@ -81,6 +93,28 @@ export default function App() {
           }
         }} 
       name='ForgotPassword' component={Forgotpass} />
+      <Stack.Screen 
+        options={{
+          title: '',
+          headerStyle: {
+          backgroundColor: 'rgb(52, 58, 64)',
+          }
+        }} 
+      name='drawer' component={Drawer} />
+      <Stack.Screen 
+        options={({ navigation }) => ({
+
+          title: '',
+          headerStyle: {
+          backgroundColor: 'rgb(52, 58, 64)',
+          },
+          headerRight: () => (
+            <Ionicon name="settings-outline" style={{ color: 'rgba(36, 114, 79, 1)' }} size={28}
+              onPress={ () => {navigation.navigate('drawer')}}
+            />
+            ),
+          })}
+      name='conversion' component={ConversionScreen} />
       </Stack.Navigator>
       
     </NavigationContainer>
