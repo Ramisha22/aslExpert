@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getDatabase, ref, set, push, update, onChildChanged, onChildRemoved } from "firebase/database";
+import { getDatabase, ref, onValue,set, push, update, onChildChanged, onChildRemoved,database } from "firebase/database";
 import { auth, db } from './firebase';
 import { TouchableOpacity, Button, TextInput, View, Text, Image, StyleSheet, ImageBackground, Touchable } from 'react-native';
 import { debugErrorMap } from "firebase/auth/react-native";
 const Feedback = ({ navigation, route }) => {
-  const { id, setId } = useState('');
-  const { feedback, setfeedback } = useState('');
-  const {review,setReview} = useState('');
+  const[id, setId ] = useState('');
+  const [review,setReview] = useState('');
+  const [list,setList] = useState([]);
   useEffect(() => {
     const fetchdata = async () => {
       console.log(await AsyncStorage.getItem('userId'));
@@ -15,14 +15,19 @@ const Feedback = ({ navigation, route }) => {
     }
 
   });
-  const store1 = () => {
-    const store = ref(db, 'user/eTmNS32rfXbBcwSetKm5prZBtrl1/feedback');
-    const x = "0";
-    console.log(review)
-    set(store, {
-      [x]: review,
+  const store1 = async () => { 
+    const store = ref(db, 'user/'+await AsyncStorage.getItem('userId')+'/feedback');
+    const itemsRef = ref(db, 'user/'+await AsyncStorage.getItem('userId')+'/feedback');
+    onValue(itemsRef, snapshot => {
+      const itemList = Object.values(snapshot.val());
+      setList(itemList);
     });
-
+    update(store, {
+      [list.length]: review,
+    });
+    
+    alert('feedback sent');
+    setReview('');
   }
 
   return (
@@ -34,8 +39,8 @@ const Feedback = ({ navigation, route }) => {
         height: 150,
       }}>
       <Image
-        source={require('./images/logo.png')}
-        style={{ alignSelf: 'center' }}
+        source={require('./images/logo1.png')}
+        style={{ alignSelf: 'center' , width:174 ,height:100}}
       />
 
       <View>
@@ -98,6 +103,9 @@ const Feedback = ({ navigation, route }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
+          onPress={()=>{
+            setReview('');
+          }}
           style={{ marginLeft: 20, marginTop: 23, width: 180, height: 50, backgroundColor: 'rgba(36, 114, 79, 1)', borderRadius: 50 }}>
           <Text
             style={{

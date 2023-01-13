@@ -1,31 +1,84 @@
 import * as React from 'react';
-import { TouchableOpacity, Button,TextInput,View, Text,Image,StyleSheet,ImageBackground, Touchable} from 'react-native';
+import { FlatList ,TouchableOpacity, Button,TextInput,View, Text,Image,StyleSheet,ImageBackground, Touchable} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Ionicon from 'react-native-vector-icons/Ionicons' ;
+import { auth, db } from './firebase';
+import  { useState, useEffect } from "react";
 import { Searchbar } from 'react-native-paper';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {onValue ,remove,database,getDatabase, ref, set, push, update, onChildChanged, onChildRemoved } from "firebase/database";
+import { getAuth, deleteUser } from "firebase/auth";
+import { StackActions } from '@react-navigation/native';
 
- const Drawer= ({ navigation, route })=> {
+function Drawerscreen ({ navigation, route }){
+  const[id,setId]=useState('');
+  const[email,setEmail]=useState('');
+  const fetchdata = async () => {
+    setId(await AsyncStorage.getItem('userId'));
+    
+    setEmail(await AsyncStorage.getItem('useremail'));
+  }
+  
+  useEffect(() => {
+    setTimeout(() => {
+      fetchdata();
+      console.log('Data retrived');
+  }, 1000);
+  },[])
+  
+  
+    const deleteItem=(id)=>{
+      fetchdata();
+     
+const auth = getAuth();
+const user = auth.currentUser;
 
+deleteUser(user).then(() => {
+}).catch((error) => {
+  
+  // ...
+});
+      const dbRef = ref(db, '/user/'+id);
+      onValue(dbRef, (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+          const childKey = id;
+          console.log(childKey);
+          const childData = childSnapshot.val();          
+            
+            remove(dbRef).then(()=>{
+              alert('user Removed!');
+              navigation.dispatch(StackActions.popToTop());
+            })
+          
+        });
+      }, {
+        onlyOnce: true
+      });
+}
   return (
     <View>
     <Searchbar
      placeholder="Search" style={{
          alignSelf: 'center',
          backgroundColor: 'rgba(142, 142, 147, 0.33)' ,color: 'white', borderRadius: 20, width: 390,height:40
-        
        }}
-
    /> 
- 
-      <View style={{flexDirection:'row'}} >
-      <Ionicon name="md-person-circle-outline" style={{ marginTop:0,color:'white',marginLeft:20}} size={60}/>  
-      <View style={{flexDirection:'column'}} >
-       <Text style={{color:'white',marginLeft:20,  marginTop:15, fontSize: 17}}>Rukayya Kulsoom</Text>
-       <Text style={{color:'white',marginLeft:20,  marginTop:10, fontSize: 13}}>rukayyakulsoom@gmail.com</Text></View>
-     
 
-       <TouchableOpacity
-          style={{ marginTop:25,marginLeft:73, width: 90,height:40,   backgroundColor: 'rgba(36, 114, 79, 1)',borderRadius:40}}>
+
+<Ionicon name="md-person-circle-outline" style={{ marginTop:0,color:'white',marginLeft:20}} size={60}/>  
+      <View style={{flexDirection:'row'}} >
+      <View style={{flexDirection:'column'}} >
+       <Text style={{color:'white',marginLeft:20,  marginTop:15, fontSize: 17}}>{email}</Text>
+       <Text style={{color:'white',marginLeft:20,  marginTop:10, fontSize: 13}}></Text></View>
+        
+      <View style={{flexDirection:'column'}} >
+      
+       </View>
+   
+
+       <TouchableOpacity 
+          style={{ marginTop:0,marginLeft:90, width: 90,height:40,backgroundColor: 'rgba(36, 114, 79, 1)',borderRadius:40}}>
           <Text
             style={{
               fontSize:16,
@@ -41,7 +94,7 @@ import { Searchbar } from 'react-native-paper';
 
          <View >
         
-        <TouchableOpacity style={{
+        <TouchableOpacity  onPress={()=>navigation.navigate('notification')} style={{
             alignSelf: 'center',
             borderRadius: 20,
             borderColor: 'rgba(0, 119, 72, 1)',
@@ -65,10 +118,37 @@ import { Searchbar } from 'react-native-paper';
 
         
         </View>
+        <View >
+        
+        <TouchableOpacity    onPress={() => deleteItem(id)} style={{
+            alignSelf: 'center',
+            borderRadius: 20,
+            borderColor: 'rgba(0, 119, 72, 1)',
+            width: 390,
+            height: 40,
+            marginTop:10,
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+            justifyContent: 'center',
+          }}> 
+          <Text
+            style={{
+              fontSize:16,
+              fontWeight: 'bold',
+              color: 'white',
+              padding: 0,
+              textAlign: 'center',
+            }}>
+            Deactivate Account
+          </Text>
+        </TouchableOpacity>
+
+        
+        </View>
         
         <View >
         
-        <TouchableOpacity style={{
+        <TouchableOpacity onPress={()=>navigation.navigate('learn')}
+         style={{
             alignSelf: 'center',
             borderRadius: 20,
             borderColor: 'rgba(0, 119, 72, 1)',
@@ -93,9 +173,8 @@ import { Searchbar } from 'react-native-paper';
         </View>
         <View >
         
-        <TouchableOpacity 
-        onPress={()=>navigation.navigate('feedback')}
-         style={{
+        <TouchableOpacity onPress={()=>navigation.navigate('feedback')}
+        style={{
             alignSelf: 'center',
             borderRadius: 20,
             borderColor: 'rgba(0, 119, 72, 1)',
@@ -195,10 +274,11 @@ import { Searchbar } from 'react-native-paper';
         </View>
 <View>
 <ImageBackground resizeMode="cover"   
-source={require('./images/circles.png')}      
- style={{ height: 270, width: 290, marginLeft: -150, marginTop:150 }}>
+source={require('./madimages/screen1/circles.png')}      
+ style={{ height: 370, width: 290, marginLeft: -150, }}>
      
         <TouchableOpacity
+        onPress={()=>navigation.navigate('login')}
           style={{
             alignSelf: 'center',
             borderRadius: 20,
@@ -228,4 +308,4 @@ source={require('./images/circles.png')}
 
   );
 }
-export {Drawer}
+export {Drawerscreen}

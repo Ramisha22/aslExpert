@@ -23,12 +23,11 @@ function SignUp({ navigation })  {
   const [showc, setShowc] = useState(false);
   const [error, setError] = useState('');
   const [error1, setError1] = useState('');
-  const [feedback,setFeedback] = useState(['']);
-  const [notes,setNotes] = useState(['']);
- 
+  const [notes, setnotes] = useState([]);
   const storeData = async value => {
 		try {
 			await AsyncStorage.setItem('userId', value);
+      await AsyncStorage.setItem('useremail', email);
 		} catch (e) {
 			throw e;
 		}
@@ -54,8 +53,8 @@ function SignUp({ navigation })  {
       createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         storeData(userCredential.user.uid);
-        writeUserData(userCredential.user.uid,email, name,date1,notes,feedback);
-        navigation.navigate('learn');
+        writeUserData(userCredential.user.uid,email, name,date1);
+        navigation.navigate('conversion');
         setError('');
         setError1('');
       })
@@ -75,15 +74,12 @@ function SignUp({ navigation })  {
     
 
   }
-  function writeUserData(id,email, name,date1,notes,feedback) {
+  function writeUserData(id,email, name,date1) {
     set(ref(db, 'user/' + id), {
       name: name,
       email: email,
       date: date1,
-      id: id,
-      notes :notes,
-      feedback:feedback
-      
+      id: id,     
     });
     navigation.navigate('learn');
   }

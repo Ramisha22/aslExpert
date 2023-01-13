@@ -28,6 +28,7 @@ function Login({ navigation, route }) {
       console.log(value);
       console.log('j');
 			await AsyncStorage.setItem('userId', value);
+      await AsyncStorage.setItem('useremail', email);
 		} catch (e) {
 			throw e;
 		}

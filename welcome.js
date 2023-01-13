@@ -22,10 +22,11 @@ function Welcome({ navigation, route }) {
           Welcome to ASL Expert
         </Text>
 
-        <View style={{ marginTop: 40, alignSelf: 'center', width: 350 }}>
+        <View style={{ marginTop: 50, alignSelf: 'center', width: 350 }}>
           <Image
-            source={require('./images/vector.png')}
-            style={{ height: 300 }}
+
+            source={require('./images/vectr.png')}
+            style={{ width:'80%',height: '70%',alignSelf: 'center'}}
           />
         </View>
 
@@ -37,7 +38,7 @@ function Welcome({ navigation, route }) {
             width: 370,
             height: 50,
             backgroundColor: 'rgba(36, 114, 79, 1)',
-            marginTop: 60,
+            marginTop: -60,
             justifyContent: 'center',
           }}
           onPress={() => navigation.navigate('login')}>

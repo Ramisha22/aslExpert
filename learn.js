@@ -2,7 +2,7 @@ import * as React from 'react';
 import { TouchableOpacity, Button,TextInput,View, Text,Image,StyleSheet,ImageBackground, Touchable} from 'react-native';
 
 
-function LearnASL  ({ navigation,route}) {
+const LearnASL = ({ navigation,route}) =>{
     return (
       <View >     
        
@@ -13,41 +13,67 @@ function LearnASL  ({ navigation,route}) {
             
         
         <TouchableOpacity
+          onPress={()=>navigation.navigate('dnotes')}
           style={{marginLeft: 15,marginTop:23, width: 180,height:200,   backgroundColor: 'rgba(36, 114, 79, 1)',borderRadius:10}}>
+          <Image resizeMode="cover"   
+             source={require('./images/Vector1.png')}  style={{ height: '20%', width: 50,marginTop:40, marginLeft: 69}} ></Image> 
           <Text
             style={{
-               
               fontSize:16,
               alignSelf: 'center',
               color: 'white',
-             marginTop:80,
+              marginTop:30,
              fontWeight:'bold'
             }}>
-            Send Feeback
+            View Notes
           </Text>
- 
+          
+        
+          <ImageBackground resizeMode="cover"   
+source={require('./images/bar.png')}  style={{ height: 4, width: 130,marginTop: 60, marginLeft: 25}} ></ImageBackground> 
         </TouchableOpacity>
- 
+   
         <TouchableOpacity
           style={{ marginLeft:20,marginTop:23, width: 180,height:200,  backgroundColor: 'rgba(36, 114, 79, 1)',borderRadius:10}}>
+          <Image resizeMode="cover"   
+             source={require('./images/le.png')}  style={{ height: 37, width:37,marginTop:40, marginLeft: 69}} ></Image>
           <Text
             style={{
               fontSize:16,
               alignSelf: 'center',
               color: 'white',
-             marginTop:13,
-             marginTop:80,
+             marginTop:30,
              fontWeight:'bold'
             }}>
             Delete Feedback
           </Text>
+          <ImageBackground resizeMode="cover"   
+source={require('./images/bar.png')}  style={{ height: 4, width: 130,marginTop: 60, marginLeft: 25}} ></ImageBackground> 
         </TouchableOpacity>
-               </View>
+ </View>
+        <TouchableOpacity
+          onPress={()=>navigation.navigate('notes')}
+          style={{ marginLeft:120,marginTop:23, width: 180,height:200,  backgroundColor: 'rgba(36, 114, 79, 1)',borderRadius:10}}>
+          <Image resizeMode="cover"   
+             source={require('./images/vector2.png')}  style={{ height: 37, width:37,marginTop:40, marginLeft: 69}} ></Image> 
+          
+          <Text
+            style={{
+              fontSize:16,
+              alignSelf: 'center',
+              color: 'white',
+             marginTop:30,
+             fontWeight:'bold'
+            }}>
+            Make Notes
+          </Text>
+          <ImageBackground resizeMode="cover"   
+source={require('./images/bar.png')}  style={{ height: 4, width: 130,marginTop: 60, marginLeft: 25}} ></ImageBackground> 
+        </TouchableOpacity>
+              
         </View>
-    
     );
   } 
-  export{LearnASL}
    const styles = StyleSheet.create({
     c_text: {
         alignSelf: 'center',
@@ -93,3 +119,4 @@ function LearnASL  ({ navigation,route}) {
 
     },
   })
+  export{LearnASL}
